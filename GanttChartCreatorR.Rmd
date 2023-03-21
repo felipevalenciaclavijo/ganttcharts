@@ -105,8 +105,8 @@ timeline_plot <- ggplot(timeline, aes(x = Task, y = task.date, colour = Group)) 
                         plot.title = element_text(size = 15))
 
 # Save plot as high resolution PNG (the secret is 'type="cairo", dpi=300')
-ggsave(timeline_plot, filename = paste(image_file_name,".png"),
+ggsave(timeline_plot, filename = paste0(image_file_name,".png"),
        width = 20, height = 20, units = "in", type = "cairo", dpi = 300, limitsize = FALSE)
 ```
 
-![](timeline_TestData .png)
+![](timeline_TestData.png)

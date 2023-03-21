@@ -6,4 +6,4 @@ It's important to have the CSV dataset organized with the same variables. Becaus
 
 ![Example](example_datasource.png)
 
-![Gantt Chart Example](timeline_TestData .png)
+![Gantt Chart Example](timeline_TestData.png)
