@@ -1,7 +1,7 @@
 ---
 title: "Gantt chart creator from Monday.com data"
 author: "Felipe Valencia"
-date: "2023-03-21"
+date: "2023-03-22"
 output:
   html_document:  
     keep_md: true
@@ -96,7 +96,7 @@ x.breaks <- seq(length(timeline$Task) + 0.5 - 1, 0, by = -1)
 
 # Build plot
 timeline_plot <- ggplot(timeline, aes(x = Task, y = task.date, colour = Group)) + 
-  geom_line(size = 6) + 
+  geom_line(size = 8) + 
   geom_vline(xintercept = x.breaks, colour = "grey80", linetype = "dotted", size = 0.5) + 
   guides(colour = guide_legend(title = NULL)) +
   labs(title = "Gantt Chart: TestData", subtitle = "", x = NULL, y = NULL) + coord_flip() +
@@ -104,13 +104,13 @@ timeline_plot <- ggplot(timeline, aes(x = Task, y = task.date, colour = Group)) 
   scale_y_date(date_breaks = "1 week", labels = date_format("%b %d, ‘%y")) +
   scale_color_manual(values = c("green4", "red3", "blue4", "grey45")) +
   theme_gantt() + theme(axis.text.x = element_text(angle = 45, hjust = 1),
-                        axis.text = element_text(size = 15),
-                        legend.text = element_text(size = 12),
-                        plot.title = element_text(size = 15))
+                        axis.text = element_text(size = 20),
+                        legend.text = element_text(size = 20),
+                        plot.title = element_text(size = 40))
 
 # Save plot as high resolution PNG (the secret is 'type="cairo", dpi=300')
 ggsave(timeline_plot, filename = paste0(image_file_name,".png"),
-       width = 20, height = 20, units = "in", type = "cairo", dpi = 300, limitsize = FALSE)
+       width = 30, height = 20, units = "in", type = "cairo", dpi = 300, limitsize = FALSE)
 ```
 
 ![](timeline_TestData.png)
