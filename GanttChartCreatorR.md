@@ -1,7 +1,7 @@
 ---
 title: "Gantt chart creator from Monday.com data"
 author: "Felipe Valencia"
-date: "2023-03-22"
+date: "2023-04-12"
 output:
   html_document:  
     keep_md: true
@@ -36,12 +36,12 @@ raw_timeline %>%
 ```
 
 ```
-##     Task          Group     Start         End
-## 1 Task 1 Sprint Backlog 22-nov-22 01-Apr-2023
-## 2 Task 2 Sprint Backlog 22-nov-22 01-Apr-2023
-## 3 Task 3 Sprint Backlog 22-nov-22 01-Apr-2023
-## 4 Task 4 Sprint Backlog 30-nov-22 06-Dec-2022
-## 5 Task 5 Sprint Backlog 30-nov-22 08-Dec-2022
+##     Task          Group      Start        End
+## 1 Task 1 Sprint Backlog 2022-11-30 2022-12-08
+## 2 Task 2 Sprint Backlog 2022-12-24 2022-12-24
+## 3 Task 3 Sprint Backlog 2022-12-24 2022-12-30
+## 4 Task 4 Sprint Backlog 2022-12-24 2022-12-30
+## 5 Task 5 Sprint Backlog 2022-12-31 2023-01-14
 ```
 
 ## Data Wrangling
@@ -52,8 +52,10 @@ raw_timeline %>%
 
 # Fix start and end dates and set groups to factors and also create long format for dates
 timeline <- raw_timeline %>%
-  mutate(Start = dmy(Start),
-         End = dmy(End),
+  # If a string is longer that 30 characters it is cut and added "..."
+  mutate(Task = ifelse(str_length(Task) < 30, paste0(Task,"   "), paste0(substr(raw_timeline$Task, 1, 30),"...")),
+         Start = ymd(Start),
+         End = ymd(End),
          Group = as.factor(Group)) %>%
   gather(date.type, task.date, -c(Group, Task)) %>%
   arrange(date.type, task.date) %>%
