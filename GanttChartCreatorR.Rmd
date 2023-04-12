@@ -22,6 +22,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(lubridate)
 library(scales)
+library(stringr)
 ```
 
 ```{r load_data}
@@ -48,8 +49,10 @@ raw_timeline %>%
 
 # Fix start and end dates and set groups to factors and also create long format for dates
 timeline <- raw_timeline %>%
-  mutate(Start = dmy(Start),
-         End = dmy(End),
+  # If a string is longer that 30 characters it is cut and added "..."
+  mutate(Task = ifelse(str_length(Task) < 30, paste0(Task,"   "), paste0(substr(raw_timeline$Task, 1, 30),"...")),
+         Start = ymd(Start),
+         End = ymd(End),
          Group = as.factor(Group)) %>%
   gather(date.type, task.date, -c(Group, Task)) %>%
   arrange(date.type, task.date) %>%
